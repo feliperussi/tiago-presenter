@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Live Video Processing Demo</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="videos">
+      <video id="localVideo" autoplay></video>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="main.js"></script>
+  <script>
+    const localVideo = document.getElementById("localVideo");
+
+    navigator.mediaDevices
+      .getUserMedia({ audio: false, video: true })
+      .then((stream) => {
+        localVideo.srcObject = stream;
+        styleVideos();
+        startSignaling('p');
+      })
+      .catch((err) => {
+        console.error("An error occurred:", err)
+      });
+  </script>
+</body>
