@@ -1,5 +1,5 @@
-# Use the official Node.js 16 image as the base image
-FROM node:16
+# Use the official Node.js 14 image as the base image (matching the version you checked)
+FROM node:22.3.0
 
 # Create and change to the app directory
 WORKDIR /usr/src/app
