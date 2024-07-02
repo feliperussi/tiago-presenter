@@ -1,5 +1,5 @@
 const express = require('express');
-const https = require('https');
+const http = require('http');
 const fs = require('fs');
 const socketIo = require('socket.io');
 const cors = require('cors');
@@ -7,13 +7,8 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const privateKey = fs.readFileSync('server.key', 'utf8');
-const certificate = fs.readFileSync('server.crt', 'utf8');
-
-const credentials = { key: privateKey, cert: certificate };
-
-const httpsServer = https.createServer(credentials, app);
-const io = socketIo(httpsServer, {
+const httpServer = http.createServer(app);
+const io = socketIo(httpServer, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
@@ -55,6 +50,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-httpsServer.listen(port, () => {
+httpServer.listen(port, () => {
   console.log('listening on', port);
 });
